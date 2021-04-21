@@ -6,7 +6,28 @@ var windows = require('./main/windows')
 
 app.on('ready', function () {
   Menu.setApplicationMenu(menu)
-  windows.create()
+  windows.create('main');
+
+  const ret = electron.globalShortcut.register('CommandOrControl+1', () => { 
+      windows.list[1].webContents.send('asynchronous-message', {'do': 'count-p1-up'}); 
+  })
+  const ret2 = electron.globalShortcut.register('CommandOrControl+2', () => { 
+    windows.list[1].webContents.send('asynchronous-message', {'do': 'count-p1-down'}); 
+  })
+  const ret3 = electron.globalShortcut.register('CommandOrControl+3', () => { 
+    windows.list[1].webContents.send('asynchronous-message', {'do': 'count-p2-up'}); 
+  })
+  const ret4 = electron.globalShortcut.register('CommandOrControl+4', () => { 
+    windows.list[1].webContents.send('asynchronous-message',{'do' : 'count-p2-down'}); 
+  }) 
+
+  
+if (!ret) {
+  console.log('registration failed')
+}
+
+// Check whether a shortcut is registered.
+console.log(electron.globalShortcut.isRegistered('CommandOrControl+1'))
 })
 
 app.on('window-all-closed', function () {
