@@ -59,4 +59,45 @@ ipcRenderer.on('type', function (event, ...args) {
 
     });
   }
+  if (type == "phases") {
+    this.currentPhase = 0;
+    this.phases = [
+      "Upkeep",
+      "Pre Combat Main Phase",
+      "Combat",
+      "Post Combat Main Phase",
+       "End",
+    ]
+    this.type = "phases";
+    
+    ipcRenderer.on('asynchronous-message', function (evt, message) {
+
+      if(document.querySelector('.currentPhase')) {
+        document.querySelector('.currentPhase').classList.remove('currentPhase');
+      }
+      console.log(this.currentPhase);
+      if (message.do == "next-phase") {
+        if (this.currentPhase + 1 >= this.phases.length) {
+          this.currentPhase = 0;
+        } else {
+          this.currentPhase++;
+        }
+        var el = document.querySelector('#phase_'.concat(this.currentPhase));
+        el.classList.add('currentPhase');
+      } else if (message.do == "last-phase") {
+        if (this.currentPhase - 1 < 0) {
+          this.currentPhase = this.phases.length;
+        } else {
+          this.currentPhase--;
+        }
+        var el = document.querySelector('#phase_'.concat(this.currentPhase));
+        el.classList.add('currentPhase');
+      } else if (message.do == "reset-phase") {
+        this.currentPhase = 0;
+        var el = document.querySelector('#phase_'.concat(this.currentPhase));
+        el.classList.add('currentPhase');
+      }  
+
+    });
+  }
 })

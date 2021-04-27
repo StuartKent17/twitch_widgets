@@ -20,7 +20,15 @@ app.on('ready', function () {
   const ret4 = electron.globalShortcut.register('CommandOrControl+4', () => { 
     windows.list[1].webContents.send('asynchronous-message',{'do' : 'count-p2-down'}); 
   }) 
-
+  const ret5 = electron.globalShortcut.register('CommandOrControl+q', () => { 
+    windows.list[1].webContents.send('asynchronous-message', {'do': 'next-phase'}); 
+  })
+  const ret6 = electron.globalShortcut.register('CommandOrControl+e', () => { 
+    windows.list[1].webContents.send('asynchronous-message',{'do' : 'last-phase'}); 
+  }) 
+  const ret7 = electron.globalShortcut.register('CommandOrControl+r', () => { 
+    windows.list[1].webContents.send('asynchronous-message', {'do': 'reset-phase'}); 
+  }) 
   
 if (!ret) {
   console.log('registration failed')

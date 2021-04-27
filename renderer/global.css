@@ -13,6 +13,34 @@ p, body, ul {
     font-family: 'Cinzel', cursive;
 }
 
+
+/****
+*
+* Phases
+*
+*****/
+.phases * {
+    font-family:'Lato'
+}
+.phases li:after {
+    background: black;
+    width: 70%;
+    height: 1.5em;
+    content: "";
+    position: absolute;
+    left: -80%;
+    transform: skewX(-25deg);
+    transition:left .5s ease;
+}
+
+.phases .currentPhase:after { 
+    left: -30%; 
+}
+/****
+*
+* COUNT
+*
+*****/
 main.count {
     display: flex;
     align-items: center;
