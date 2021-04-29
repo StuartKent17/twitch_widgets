@@ -13,6 +13,9 @@ p, body, ul {
     font-family: 'Cinzel', cursive;
 }
 
+.hide {
+    display: none!important;
+}
 
 /****
 *
@@ -20,21 +23,31 @@ p, body, ul {
 *
 *****/
 .phases * {
-    font-family:'Lato'
-}
-.phases li:after {
-    background: black;
-    width: 70%;
-    height: 1.5em;
-    content: "";
-    position: absolute;
-    left: -80%;
-    transform: skewX(-25deg);
-    transition:left .5s ease;
+    font-family:'Skranji'
 }
 
-.phases .currentPhase:after { 
-    left: -30%; 
+.phases li, .phasesul, .phases h2 {
+  text-align:center;
+  margin-left:auto;
+  margin-right:auto;
+  padding:0px;
+  color:white;
+  display:block;
+  width:100%;
+
+}
+.phases li {
+  position:absolute;
+  font-size:34px;
+  left:-500px;
+  transition:all .4s ease;
+}
+
+.phases .currentPhase { 
+    left: 0px; 
+}
+.phases .currentPhase ~li  { 
+    left: 500px; 
 }
 /****
 *

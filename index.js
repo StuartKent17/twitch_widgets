@@ -9,25 +9,25 @@ app.on('ready', function () {
   windows.create('main');
 
   const ret = electron.globalShortcut.register('CommandOrControl+1', () => { 
-      windows.list[1].webContents.send('asynchronous-message', {'do': 'count-p1-up'}); 
+    sendMessageAll({'do': 'count-p1-up'}); 
   })
   const ret2 = electron.globalShortcut.register('CommandOrControl+2', () => { 
-    windows.list[1].webContents.send('asynchronous-message', {'do': 'count-p1-down'}); 
+    sendMessageAll({'do': 'count-p1-down'}); 
   })
   const ret3 = electron.globalShortcut.register('CommandOrControl+3', () => { 
-    windows.list[1].webContents.send('asynchronous-message', {'do': 'count-p2-up'}); 
+    sendMessageAll({'do': 'count-p2-up'}); 
   })
   const ret4 = electron.globalShortcut.register('CommandOrControl+4', () => { 
-    windows.list[1].webContents.send('asynchronous-message',{'do' : 'count-p2-down'}); 
+    sendMessageAll({'do' : 'count-p2-down'}); 
   }) 
   const ret5 = electron.globalShortcut.register('CommandOrControl+q', () => { 
-    windows.list[1].webContents.send('asynchronous-message', {'do': 'next-phase'}); 
+    sendMessageAll({'do': 'next-phase'}); 
   })
   const ret6 = electron.globalShortcut.register('CommandOrControl+e', () => { 
-    windows.list[1].webContents.send('asynchronous-message',{'do' : 'last-phase'}); 
+    sendMessageAll({'do' : 'last-phase'}); 
   }) 
   const ret7 = electron.globalShortcut.register('CommandOrControl+r', () => { 
-    windows.list[1].webContents.send('asynchronous-message', {'do': 'reset-phase'}); 
+    sendMessageAll({'do': 'reset-phase'}); 
   }) 
   
 if (!ret) {
@@ -37,6 +37,13 @@ if (!ret) {
 // Check whether a shortcut is registered.
 console.log(electron.globalShortcut.isRegistered('CommandOrControl+1'))
 })
+
+function sendMessageAll(args) {
+    windows.list.forEach(function(item, index) {
+      console.log(item,index);
+      item.webContents.send('asynchronous-message', args); 
+    })
+}
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()

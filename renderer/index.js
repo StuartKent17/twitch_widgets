@@ -61,13 +61,7 @@ ipcRenderer.on('type', function (event, ...args) {
   }
   if (type == "phases") {
     this.currentPhase = 0;
-    this.phases = [
-      "Upkeep",
-      "Pre Combat Main Phase",
-      "Combat",
-      "Post Combat Main Phase",
-       "End",
-    ]
+    this.numPhases = 10;
     this.type = "phases";
     
     ipcRenderer.on('asynchronous-message', function (evt, message) {
@@ -77,18 +71,32 @@ ipcRenderer.on('type', function (event, ...args) {
       }
       console.log(this.currentPhase);
       if (message.do == "next-phase") {
-        if (this.currentPhase + 1 >= this.phases.length) {
+        if (this.currentPhase + 1 >= this.numPhases) {
           this.currentPhase = 0;
         } else {
+          if (this.currentPhase >1 && this.currentPhase < 7) {
+            document.querySelector('.combatHeader').classList.remove('hide');
+            document.querySelector('.phaseHeader').classList.add('hide');
+          } else {
+            document.querySelector('.combatHeader').classList.add('hide');
+            document.querySelector('.phaseHeader').classList.remove('hide');
+          }
           this.currentPhase++;
         }
         var el = document.querySelector('#phase_'.concat(this.currentPhase));
         el.classList.add('currentPhase');
       } else if (message.do == "last-phase") {
         if (this.currentPhase - 1 < 0) {
-          this.currentPhase = this.phases.length;
+          this.currentPhase = this.numPhases -1;
         } else {
           this.currentPhase--;
+          if (this.currentPhase >1 && this.currentPhase < 7) {
+            document.querySelector('.combatHeader').classList.remove('hide');
+            document.querySelector('.phaseHeader').classList.add('hide');
+          } else {
+            document.querySelector('.combatHeader').classList.add('hide');
+            document.querySelector('.phaseHeader').classList.remove('hide');
+          }
         }
         var el = document.querySelector('#phase_'.concat(this.currentPhase));
         el.classList.add('currentPhase');
@@ -96,6 +104,8 @@ ipcRenderer.on('type', function (event, ...args) {
         this.currentPhase = 0;
         var el = document.querySelector('#phase_'.concat(this.currentPhase));
         el.classList.add('currentPhase');
+        document.querySelector('.combatHeader').classList.add('hide');
+        document.querySelector('.phaseHeader').classList.remove('hide');
       }  
 
     });
