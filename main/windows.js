@@ -45,7 +45,7 @@ function create (obj, type) {
   win.setTitle(`${config.APP_NAME} - Window ${gType}`)
   list.push(win)
 
-  if (!config.DEBUG) win.webContents.openDevTools()
+  if (config.DEBUG) win.webContents.openDevTools()
 
   win.webContents.on('did-finish-load', function () {
     win.webContents.send('type', gType)
